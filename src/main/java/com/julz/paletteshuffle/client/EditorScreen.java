@@ -30,11 +30,11 @@ final class EditorScreen extends PaletteScreen {
             String tip=i<entries.size()?stack.getHoverName().getString():"Add block";
             icon(width/2-36+i%3*24,68+i/3*24,stack,tip,i==selected,()->{
                 selected=index;
-                if(index>=entries.size())minecraft.setScreen(new PickerScreen(this));else rebuildWidgets();
+                if(index>=entries.size())minecraft.gui.setScreen(new PickerScreen(this));else rebuildWidgets();
             });
         }
         int y=150;
-        button(width/2-142,y,90,"Replace / add",()->minecraft.setScreen(new PickerScreen(this)));
+        button(width/2-142,y,90,"Replace / add",()->minecraft.gui.setScreen(new PickerScreen(this)));
         button(width/2-48,y,62,"Remove",()->{entries.remove(selected);selected=Math.max(0,selected-1);rebuildWidgets();}).active=selected<entries.size();
         button(width/2+18,y,28,"−",()->weight(-1)).active=selected<entries.size()&&entries.get(selected).weight()>1;
         button(width/2+50,y,28,"+",()->weight(1)).active=selected<entries.size()&&entries.get(selected).weight()<100;
@@ -44,7 +44,7 @@ final class EditorScreen extends PaletteScreen {
                 Palette p=new Palette(id,name,entries);PaletteShuffleClient.STORE.put(p);
                 var active=PaletteShuffleClient.PLACEMENT.active();
                 if(active!=null&&active.id().equals(id))PaletteShuffleClient.PLACEMENT.stop();
-                minecraft.setScreen(parent);
+                minecraft.gui.setScreen(parent);
             }catch(Exception e){error=e.getMessage();}
         });
         button(width/2+4,height-24,100,"Cancel",this::onClose);
@@ -64,7 +64,7 @@ final class EditorScreen extends PaletteScreen {
         }else g.centeredText(font,"Choose up to nine blocks. Equal chances by default.",width/2,180,0xFFCCCCCC);
     }
     @Override public void onClose(){
-        if(name.equals(originalName)&&entries.equals(originalEntries)){minecraft.setScreen(parent);return;}
-        minecraft.setScreen(new ConfirmScreen(yes->minecraft.setScreen(yes?parent:this),Component.literal("Discard changes?"),Component.literal("Your saved palette will remain unchanged.")));
+        if(name.equals(originalName)&&entries.equals(originalEntries)){minecraft.gui.setScreen(parent);return;}
+        minecraft.gui.setScreen(new ConfirmScreen(yes->minecraft.gui.setScreen(yes?parent:this),Component.literal("Discard changes?"),Component.literal("Your saved palette will remain unchanged.")));
     }
 }

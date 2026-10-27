@@ -14,7 +14,7 @@ abstract class PaletteScreen extends Screen {
         return addRenderableWidget(Button.builder(Component.literal(label), b -> action.run()).bounds(x,y,w,20).build());
     }
     protected Button icon(int x, int y, ItemStack stack, String tip, boolean selected, Runnable action) {
-        Button b = new Button(x,y,24,24, Component.literal(tip), ignored -> action.run(), Button.DEFAULT_NARRATION) {
+        Button b = new Button(x,y,24,24, Component.literal(tip), ignored -> action.run(), supplier -> supplier.get()) {
             @Override public void extractContents(GuiGraphicsExtractor g, int mx, int my, float delta) {
                 g.item(stack, getX()+4, getY()+4);
                 if (selected) g.outline(getX(), getY(), getWidth(), getHeight(), 0xFFB7DD82);
@@ -24,6 +24,7 @@ abstract class PaletteScreen extends Screen {
         return addRenderableWidget(b);
     }
     @Override public void extractRenderState(GuiGraphicsExtractor g, int mx, int my, float delta) {
+        extractBackground(g,mx,my,delta);
         super.extractRenderState(g,mx,my,delta);
         g.centeredText(font,title,width/2,12,0xFFFFFFFF);
         if (!error.isEmpty()) g.centeredText(font,error,width/2,height-34,0xFFFF9999);

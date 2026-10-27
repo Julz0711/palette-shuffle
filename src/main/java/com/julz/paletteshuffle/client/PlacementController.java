@@ -34,7 +34,7 @@ public final class PlacementController {
         if (mc.player == null || mc.level == null) { stop(); return; }
         if (active == null) return;
         if (!mc.player.isAlive() || mc.player.isSpectator()) { stop(); return; }
-        if (mc.screen != null || mc.gameMode == null || mc.player.containerMenu != mc.player.inventoryMenu
+        if (mc.gui.screen() != null || mc.gameMode == null || mc.player.containerMenu != mc.player.inventoryMenu
                 || !mc.player.inventoryMenu.getCarried().isEmpty()) return;
         if (delay > 0) { delay--; return; }
         var inventory = mc.player.getInventory();
@@ -77,6 +77,6 @@ public final class PlacementController {
     }
     private void message(String text) {
         var p = Minecraft.getInstance().player;
-        if (p != null) p.displayClientMessage(Component.literal(text), true);
+        if (p != null) p.sendOverlayMessage(Component.literal(text));
     }
 }

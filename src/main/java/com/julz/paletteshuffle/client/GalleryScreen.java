@@ -25,7 +25,7 @@ public final class GalleryScreen extends PaletteScreen {
         for (int i=page*perPage;i<Math.min(palettes.size(),(page+1)*perPage);i++) {
             Palette p=palettes.get(i); int index=i-page*perPage;
             Button card = new Button(left+index%cols*108,34+index/cols*80,104,76,
-                    Component.literal(p.name()), b->{selected=p.id();rebuildWidgets();},Button.DEFAULT_NARRATION) {
+                    Component.literal(p.name()), b->{selected=p.id();rebuildWidgets();},supplier -> supplier.get()) {
                 @Override public void extractContents(GuiGraphicsExtractor g,int mx,int my,float delta) {
                     var active=PaletteShuffleClient.PLACEMENT.active();
                     int color=active!=null&&active.id().equals(p.id())?0xFFB7DD82:0xFFFFFFFF;
@@ -37,7 +37,7 @@ public final class GalleryScreen extends PaletteScreen {
             addRenderableWidget(card);
         }
         int y=height-116;
-        button(width/2-155,y,70,"New palette",()->minecraft.setScreen(new EditorScreen(this,null)));
+        button(width/2-155,y,70,"New palette",()->minecraft.gui.setScreen(new EditorScreen(this,null)));
         button(width/2-81,y,42,"Edit",()->edit()).active=current()!=null;
         button(width/2-35,y,68,"Duplicate",()->{
             try{PaletteShuffleClient.STORE.put(current().duplicate());rebuildWidgets();}catch(Exception e){error=e.getMessage();}
@@ -53,24 +53,24 @@ public final class GalleryScreen extends PaletteScreen {
         button(width/2-155,height-24,98,"Use palette",()->{
             PaletteShuffleClient.PLACEMENT.start(current(),slot);
             minecraft.player.getInventory().setSelectedSlot(slot);
-            minecraft.setScreen(null);
+            minecraft.gui.setScreen(null);
         }).active=current()!=null&&minecraft.player!=null;
         button(width/2-53,height-24,108,"Stop using palette",()->{PaletteShuffleClient.PLACEMENT.stop();rebuildWidgets();})
                 .active=PaletteShuffleClient.PLACEMENT.active()!=null;
         button(width/2+59,height-24,96,"Done",this::onClose);
     }
     private Palette current(){return PaletteShuffleClient.STORE.all().stream().filter(p->p.id().equals(selected)).findFirst().orElse(null);}
-    private void edit(){minecraft.setScreen(new EditorScreen(this,current()));}
+    private void edit(){minecraft.gui.setScreen(new EditorScreen(this,current()));}
     private void confirmDelete(){
         var palette=current();
-        minecraft.setScreen(new ConfirmScreen(yes->{
+        minecraft.gui.setScreen(new ConfirmScreen(yes->{
             if(yes)try{
                 PaletteShuffleClient.STORE.delete(palette.id());
                 var active=PaletteShuffleClient.PLACEMENT.active();
                 if(active!=null&&active.id().equals(palette.id()))PaletteShuffleClient.PLACEMENT.stop();
                 selected=null;
             }catch(Exception e){error=e.getMessage();}
-            minecraft.setScreen(this);
+            minecraft.gui.setScreen(this);
         },Component.literal("Delete "+palette.name()+"?"),Component.literal("This removes the saved palette. Your blocks are kept.")));
     }
     @Override public void extractRenderState(GuiGraphicsExtractor g,int mx,int my,float d){
@@ -78,5 +78,5 @@ public final class GalleryScreen extends PaletteScreen {
         if(PaletteShuffleClient.STORE.all().isEmpty())g.centeredText(font,"Create your first palette to start building.",width/2,55,0xFFCCCCCC);
         g.centeredText(font,"Choose the hotbar slot to build with",width/2,height-92,0xFFCCCCCC);
     }
-    @Override public void onClose(){minecraft.setScreen(parent);}
+    @Override public void onClose(){minecraft.gui.setScreen(parent);}
 }

@@ -29,7 +29,7 @@ final class PickerScreen extends PaletteScreen {
         page=Math.min(page,Math.max(0,(items.size()-1)/perPage));
         for(int i=page*perPage;i<Math.min(items.size(),(page+1)*perPage);i++){
             var item=items.get(i);var stack=new ItemStack(item);int index=i-page*perPage;
-            icon((width-cols*24)/2+index%cols*24,90+index/cols*24,stack,stack.getHoverName().getString()+" · "+Blocks.id(item),false,()->{parent.choose(Blocks.id(item));minecraft.setScreen(parent);});
+            icon((width-cols*24)/2+index%cols*24,90+index/cols*24,stack,stack.getHoverName().getString()+" · "+Blocks.id(item),false,()->{parent.choose(Blocks.id(item));minecraft.gui.setScreen(parent);});
         }
         button(width/2-104,height-24,40,"<",()->{page--;rebuildWidgets();}).active=page>0;
         button(width/2-60,height-24,120,"Back to palette",this::onClose);
@@ -39,5 +39,5 @@ final class PickerScreen extends PaletteScreen {
         super.extractRenderState(g,mx,my,d);
         if(results.isEmpty())g.centeredText(font,"No blocks found. Try All blocks or another search.",width/2,100,0xFFCCCCCC);
     }
-    @Override public void onClose(){minecraft.setScreen(parent);}
+    @Override public void onClose(){minecraft.gui.setScreen(parent);}
 }
