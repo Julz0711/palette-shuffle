@@ -18,3 +18,13 @@ java { toolchain.languageVersion = JavaLanguageVersion.of(25); withSourcesJar() 
 tasks.withType(JavaCompile).configureEach { options.release = 25 }
 test { useJUnitPlatform() }
 jar { from('LICENSE') { rename { "${it}_palette-shuffle" } } }
+
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = 'palette-shuffle-test'
+        enableGameTests = false
+        enableClientGameTests = true
+        eula = true
+    }
+}

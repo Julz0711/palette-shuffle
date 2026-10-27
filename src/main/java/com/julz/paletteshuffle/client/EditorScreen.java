@@ -33,8 +33,8 @@ final class EditorScreen extends PaletteScreen {
                 if(index>=entries.size())minecraft.gui.setScreen(new PickerScreen(this));else rebuildWidgets();
             });
         }
-        int y=150;
-        button(width/2-142,y,90,"Replace / add",()->minecraft.gui.setScreen(new PickerScreen(this)));
+        int y=146;
+        button(width/2-142,y,90,"Choose block",()->minecraft.gui.setScreen(new PickerScreen(this)));
         button(width/2-48,y,62,"Remove",()->{entries.remove(selected);selected=Math.max(0,selected-1);rebuildWidgets();}).active=selected<entries.size();
         button(width/2+18,y,28,"−",()->weight(-1)).active=selected<entries.size()&&entries.get(selected).weight()>1;
         button(width/2+50,y,28,"+",()->weight(1)).active=selected<entries.size()&&entries.get(selected).weight()<100;
@@ -44,7 +44,7 @@ final class EditorScreen extends PaletteScreen {
                 Palette p=new Palette(id,name,entries);PaletteShuffleClient.STORE.put(p);
                 var active=PaletteShuffleClient.PLACEMENT.active();
                 if(active!=null&&active.id().equals(id))PaletteShuffleClient.PLACEMENT.stop();
-                minecraft.gui.setScreen(parent);
+                parent.select(id);minecraft.gui.setScreen(parent);
             }catch(Exception e){error=e.getMessage();}
         });
         button(width/2+4,height-24,100,"Cancel",this::onClose);
@@ -60,8 +60,8 @@ final class EditorScreen extends PaletteScreen {
         super.extractRenderState(g,mx,my,d);
         if(selected<entries.size()){
             var e=entries.get(selected);int sum=entries.stream().mapToInt(Palette.Entry::weight).sum();
-            g.centeredText(font,"Mix weight: "+e.weight()+" · "+Math.round(100.0*e.weight()/sum)+"% when all blocks are available",width/2,180,0xFFCCCCCC);
-        }else g.centeredText(font,"Choose up to nine blocks. Equal chances by default.",width/2,180,0xFFCCCCCC);
+            g.centeredText(font,"Mix weight: "+e.weight()+" · "+Math.round(100.0*e.weight()/sum)+"% when all blocks are available",width/2,174,0xFFCCCCCC);
+        }else g.centeredText(font,"Choose up to nine blocks. Equal chances by default.",width/2,174,0xFFCCCCCC);
     }
     @Override public void onClose(){
         if(name.equals(originalName)&&entries.equals(originalEntries)){minecraft.gui.setScreen(parent);return;}

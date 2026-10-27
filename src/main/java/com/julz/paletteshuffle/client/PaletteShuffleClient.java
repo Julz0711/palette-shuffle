@@ -19,8 +19,8 @@ public final class PaletteShuffleClient implements ClientModInitializer {
         var category = KeyMapping.Category.register(Identifier.fromNamespaceAndPath("palette-shuffle", "general"));
         var open = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.palette-shuffle.open",
                 InputConstants.Type.KEYBOARD, InputConstants.KEY_B, category));
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> PLACEMENT.stop());
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> PLACEMENT.stop());
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> PLACEMENT.reset());
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> PLACEMENT.reset());
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (open.consumeClick()) if (client.gui.screen() == null) client.gui.setScreen(new GalleryScreen(null));
             PLACEMENT.tick(client);
