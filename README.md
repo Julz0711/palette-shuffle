@@ -26,7 +26,9 @@ Minecraft 26.3, Java 25, Fabric Loader 0.20.1+, and Fabric API for 26.3. Mod Men
 ./gradlew runClient
 ```
 
-On Windows, use `gradlew.bat build`. The playable JAR is `build/libs/palette-shuffle-0.1.0.jar`; the sources JAR is for development. GitHub Actions builds and runs tests, then uploads the playable JAR as `palette-shuffle-26.3`.
+On Windows, use `gradlew.bat build`. The playable JAR is `build/libs/palette-shuffle-0.1.1.jar`; the sources JAR is for development. GitHub Actions builds and runs tests, then uploads the playable JAR as `palette-shuffle-26.3`.
+
+Version 0.1.1 fixes the menu-opening crash (`Can only blur once per frame`) by letting Minecraft handle the background once, before the palette screen content.
 
 ## Development status
 

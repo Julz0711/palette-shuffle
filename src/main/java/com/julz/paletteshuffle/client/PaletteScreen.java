@@ -24,7 +24,8 @@ abstract class PaletteScreen extends Screen {
         return addRenderableWidget(b);
     }
     @Override public void extractRenderState(GuiGraphicsExtractor g, int mx, int my, float delta) {
-        extractBackground(g,mx,my,delta);
+        // Screen.extractRenderStateWithTooltipAndSubtitles already draws the background.
+        // Requesting it here again would schedule a second blur and crash in 26.3.
         super.extractRenderState(g,mx,my,delta);
         g.centeredText(font,title,width/2,12,0xFFFFFFFF);
         if (!error.isEmpty()) g.centeredText(font,error,width/2,height-34,0xFFFF9999);
