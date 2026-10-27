@@ -28,8 +28,12 @@ Minecraft 26.3, Java 25, Fabric Loader 0.20.1+, and Fabric API for 26.3. Mod Men
 
 On Windows, use `gradlew.bat build`. The playable JAR is `build/libs/palette-shuffle-0.2.0.jar`; the sources JAR is for development. GitHub Actions builds and runs tests, then uploads the playable JAR as `palette-shuffle-26.3`.
 
+Version 0.2.0 adds visible palette slots, a live hotbar preview, immediate activation, and a clear Enable/Disable control that restores the previous item.
+
 Version 0.1.1 fixes the menu-opening crash (`Can only blur once per frame`) by letting Minecraft handle the background once, before the palette screen content.
 
 ## Development status
 
-Initial implementation. Unit tests cover palette validation, weighted selection, unavailable blocks, persistence, and corruption protection. In-game validation is still required before release: creative/survival placement, high-latency server rejection, empty stacks, screen layout at different GUI scales, key conflicts, and Mod Menu navigation. No claim of complete multiplayer validation is made.
+Unit tests cover palette validation, weighted selection, unavailable blocks, persistence, and corruption protection. Automated Minecraft client tests open the menu with B, capture the gallery/editor at a 1080×648 window size, place blocks in Creative and Survival, check missing-supply feedback, and verify that disabling restores the previous item. Run them with `./gradlew runClientGameTest` (a display or Xvfb is required).
+
+High-latency servers, server rejection, other GUI scales, key conflicts, and modpack compatibility still need testing before a full release.
