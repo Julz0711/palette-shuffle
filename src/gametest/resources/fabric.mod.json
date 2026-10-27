@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "palette-shuffle-test",
+  "version": "1.0.0",
+  "name": "Palette Shuffle client tests",
+  "environment": "client",
+  "entrypoints": {"fabric-client-gametest": ["com.julz.paletteshuffle.client.PaletteClientTest"]}
+}
