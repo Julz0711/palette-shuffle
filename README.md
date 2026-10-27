@@ -7,11 +7,11 @@ A client-side Fabric mod for Minecraft **26.3**. Create named palettes of up to 
 - Press **B** (changeable under Controls → Key Binds) or open the configuration through **Mod Menu**.
 - Create a palette, enter a name, and add blocks using the Inventory or All blocks picker.
 - Select a block and use **− / +** to adjust its weight, or **Equal mix** to reset all weights.
-- Save, select the palette card, choose a working hotbar slot, and click **Use palette**.
+- Save, select the palette card, choose a working hotbar slot, and click **Enable palette**, then **Back to game**.
 - Place normally. The held block is the next block placed; successful client-predicted placements trigger a new choice. Chest interactions and failed placements do not reroll.
-- Switching hotbar slots suspends placement. Use **Stop using palette** to disable it. Joining or leaving a server resets activation.
+- Switching hotbar slots suspends placement. Reopen the gallery and click **Disable palette** to stop immediately. The gallery remembers the active palette and slot. Joining or leaving a server resets activation.
 
-Survival uses ordinary inventory swaps and skips unavailable blocks. It stops when supplies are exhausted. Displaced items stay in your inventory; stopping leaves the current block in the working slot. Creative supplies block stacks in that slot. Inventory screens suspend all automatic swapping. The selected slot is outlined with a palette HUD label.
+Survival uses ordinary inventory swaps and skips unavailable blocks. It stops when supplies are exhausted. Displaced items stay in your inventory. Disabling restores the previous survival item if it is still available. Creative supplies block stacks in that slot and restores its previous contents when disabled. Inventory screens suspend all automatic swapping. The selected slot is outlined with a palette HUD label.
 
 Palettes are stored across worlds in `config/palette-shuffle.json`. Saves are atomic; malformed or unsupported files are preserved, with saving disabled until the file is repaired or moved aside. Missing modded block IDs remain saved and are skipped during placement.
 
@@ -26,7 +26,7 @@ Minecraft 26.3, Java 25, Fabric Loader 0.20.1+, and Fabric API for 26.3. Mod Men
 ./gradlew runClient
 ```
 
-On Windows, use `gradlew.bat build`. The playable JAR is `build/libs/palette-shuffle-0.1.1.jar`; the sources JAR is for development. GitHub Actions builds and runs tests, then uploads the playable JAR as `palette-shuffle-26.3`.
+On Windows, use `gradlew.bat build`. The playable JAR is `build/libs/palette-shuffle-0.2.0.jar`; the sources JAR is for development. GitHub Actions builds and runs tests, then uploads the playable JAR as `palette-shuffle-26.3`.
 
 Version 0.1.1 fixes the menu-opening crash (`Can only blur once per frame`) by letting Minecraft handle the background once, before the palette screen content.
 

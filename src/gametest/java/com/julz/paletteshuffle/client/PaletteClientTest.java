@@ -26,7 +26,7 @@ public class PaletteClientTest implements FabricClientGameTest {
     }
     @Override public void runTest(ClientGameTestContext context){
         var palette=new Palette(UUID.randomUUID(),"Stone test",List.of(new Palette.Entry("minecraft:stone",1)));
-        context.runOnClient(mc->PaletteShuffleClient.STORE.put(palette));
+        context.runOnClient(mc->{try{PaletteShuffleClient.STORE.put(palette);}catch(java.io.IOException e){throw new java.io.UncheckedIOException(e);}});
         try(var world=context.worldBuilder().adjustSettings(s->s.setGameMode(WorldCreationUiState.SelectedGameMode.CREATIVE)).create()){
             world.getConnection().waitForChunksRender();
             world.getServer().runCommand("tp @p 0 100 0");
