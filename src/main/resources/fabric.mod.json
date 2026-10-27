@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "palette-shuffle",
+  "version": "${version}",
+  "name": "Palette Shuffle",
+  "description": "Build naturally with named, weighted random block palettes.",
+  "authors": ["Julz"],
+  "license": "MIT",
+  "environment": "client",
+  "contact": {"sources": "https://github.com/Julz0711/palette-shuffle", "issues": "https://github.com/Julz0711/palette-shuffle/issues"},
+  "entrypoints": {
+    "client": ["com.julz.paletteshuffle.client.PaletteShuffleClient"],
+    "modmenu": ["com.julz.paletteshuffle.compat.ModMenuIntegration"]
+  },
+  "mixins": ["palette-shuffle.mixins.json"],
+  "depends": {"fabricloader": ">=0.20.1", "minecraft": "~26.3", "java": ">=25", "fabric-api": "*"},
+  "suggests": {"modmenu": "*"}
+}

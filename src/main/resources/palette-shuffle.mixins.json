@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "com.julz.paletteshuffle.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": ["BlockItemMixin", "GameModeMixin"],
+  "injectors": {"defaultRequire": 1}
+}
